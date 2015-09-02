@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace Plagiarism
 {
+
     public class XComparer
     {
-        public class ReportItem
-        {
-            public string BookName;
-            public int Start;
-            public int Length;
-        }
-        
         public int N { set; get; }
+
         public string  Manuscript { set; get; }
 
         public XComparer(string m, int n)
@@ -23,6 +18,9 @@ namespace Plagiarism
             Manuscript = m;
             N = n;
         }
+
+        public XComparer() : this("", 100) { }
+
 
         public List<ReportItem> Compare(string bookName, string book)
         {
