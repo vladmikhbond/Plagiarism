@@ -11,6 +11,7 @@ namespace Plagiarism
     {
         public int N { set; get; }
 
+        // It is analized.
         public string  Manuscript { set; get; }
 
         public XComparer(string m, int n)
