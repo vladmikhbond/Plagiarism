@@ -6,24 +6,28 @@ using System.Threading.Tasks;
 
 namespace Plagiarism
 {
-
+    /// <summary>
+    /// Compare a manuscript with books from library with List<ReporItem> as result.
+    /// N - step of testing, N/2 - initial sample size
+    /// </summary>
     public class XComparer
     {
         public int N { set; get; }
 
         // It is analized.
-        public string  Manuscript { set; get; }
+        public string  Manuscript { set; private get; }
 
-        public XComparer(string m, int n)
+        public XComparer(string manuscript, int n)
         {
-            Manuscript = m;
+            Manuscript = manuscript;
             N = n;
         }
 
         public XComparer() : this("", 100) { }
 
-
-        public List<ReportItem> Compare(string bookName, string book)
+        // Compare the manuscript with a book
+        // 
+        public List<ReportItem> Compare(string bookName, string bookText)
         {
             var result = new List<ReportItem>();
             int pos = 0;
@@ -31,7 +35,7 @@ namespace Plagiarism
             while (pos < Manuscript.Length - N)
             {
                 // ищем расширенную пробу в книге 
-                var item = IndexOfMax(book, pos);
+                var item = IndexOfMax(bookText, pos);
                 
                 if (item != null)
                 {
@@ -50,7 +54,7 @@ namespace Plagiarism
         public ReportItem IndexOfMax(string book, int pos) {
             string sample = Manuscript.Substring(pos, N);
             int ib = Find (book, sample, 0);
-            // если проба нашлась, расширяем ее до максимума
+            // если проба нашлась, расширяем ее до максимального размера
             if (ib > -1)
             {
                 int im = ExtStart(book, ib, pos);
@@ -62,9 +66,9 @@ namespace Plagiarism
 
         // Сдвигаем начало 
         //
-        public int ExtStart(string book, int ib, int im)
+        public int ExtStart(string bookText, int ib, int im)
         {
-            while (im >= 0 && ib >= 0 && book[ib] == Manuscript[im])
+            while (im >= 0 && ib >= 0 && bookText[ib] == Manuscript[im])
             {
                 ib--;
                 im--;
@@ -74,14 +78,14 @@ namespace Plagiarism
 
         // Сдвигаем конец 
         //
-        public int ExtFinish(string book, int jb, int jm)
+        public int ExtFinish(string bookText, int ib, int im)
         {
-            while (jb < book.Length && jm < Manuscript.Length && book[jb] == Manuscript[jm])
+            while (ib < bookText.Length && im < Manuscript.Length && bookText[ib] == Manuscript[im])
             {
-                jb++;
-                jm++;
+                ib++;
+                im++;
             }
-            return jm;
+            return im;
         }
 
 

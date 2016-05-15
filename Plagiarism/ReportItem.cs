@@ -14,7 +14,7 @@ namespace Plagiarism
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2} ", BookName, Start, Length);
+            return $"TAKEN:{Length} from --{BookName} ({Start})";
         }
     }
 }

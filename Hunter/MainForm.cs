@@ -35,15 +35,15 @@ namespace Hunter
             comparer.Manuscript = File.ReadAllText(manualName);
 
             string dirName = Path.GetDirectoryName(manualName);
+            reportBox.Text = "";
             foreach (string bookName in Directory.GetFiles(dirName))
             {
                 if (bookName == manualName)
                     continue;
                 var report = comparer.Compare(Path.GetFileName(bookName), File.ReadAllText(bookName));
-                reportBox.Text = "";
                 foreach (var item in report)
                 {
-                    reportBox.Text += item.ToString() + "\n";
+                    reportBox.Text += item.ToString() + "\r\n";
                 }
                 reportBox.Text += "\n";
             }
