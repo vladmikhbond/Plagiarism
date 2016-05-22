@@ -1,20 +1,12 @@
 ﻿using Plagiarism;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Hunter
 {
     public partial class MainForm : Form
     {
-        XComparer comparer = new XComparer();
 
         public MainForm()
         {
@@ -23,30 +15,67 @@ namespace Hunter
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                Report(openFileDialog1.FileName);
-
+            if (openManuscriptDialog.ShowDialog() == DialogResult.OK)
+            {
+                int delta;
+                try
+                {
+                    delta = Convert.ToInt32(toolStripDelta.Text);
+                } catch
+                {
+                    delta = 100;
+                    toolStripDelta.Text = "100 ";
+                }
+                textFragmentBox.Text = "WAIT...";
+                textFragmentBox.Refresh();
+                DoReport(openManuscriptDialog.FileName, delta);
+                textFragmentBox.Text = "READY.";
             }
         }
 
-        private void Report(string manualName)
+        private void DoReport(string manualPath, int n)
         {
-            comparer.Manuscript = File.ReadAllText(manualName);
+            string s = File.ReadAllText(manualPath);
+            Book manual = new Book("", s);
 
-            string dirName = Path.GetDirectoryName(manualName);
-            reportBox.Text = "";
-            foreach (string bookName in Directory.GetFiles(dirName))
+            XComparer comparer = new XComparer(manual.Digest, n);
+
+            string root = Path.GetDirectoryName(manualPath);
+
+
+            reportBox.Items.Clear();
+            foreach (string bookPath in Directory.GetFiles(root))
             {
-                if (bookName == manualName)
+                if (bookPath == manualPath)
                     continue;
-                var report = comparer.Compare(Path.GetFileName(bookName), File.ReadAllText(bookName));
-                foreach (var item in report)
+
+                Book book = new Book(
+                    name: Path.GetFileName(bookPath),
+                    source: File.ReadAllText(bookPath));
+
+                var report = comparer.Compare(book.Digest);
+
+                foreach (var reportItem in report)
                 {
-                    reportBox.Text += item.ToString() + "\r\n";
+                    reportItem.Book = book;
+                    reportBox.Items.Add(reportItem);
                 }
-                reportBox.Text += "\n";
             }
+            textFragmentBox.Text = "";
+        }
+
+        private void reportBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (reportBox.SelectedIndex != -1)
+            {
+                var item = (ReportItem)reportBox.SelectedItem;
+                textFragmentBox.Text = item.Fragment;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

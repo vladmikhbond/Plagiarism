@@ -79,9 +79,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataStore\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Plagiarism\Plagiarism.csproj">
       <Project>{b7f382a0-d618-4bab-9a9d-d99c5e683f97}</Project>

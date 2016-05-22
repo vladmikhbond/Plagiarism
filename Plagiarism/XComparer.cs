@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Plagiarism
 {
@@ -17,17 +13,15 @@ namespace Plagiarism
         // It is analized.
         public string  Manuscript { set; private get; }
 
-        public XComparer(string manuscript, int n)
+        public XComparer(string manuscript, int n=30)
         {
             Manuscript = manuscript;
             N = n;
         }
 
-        public XComparer() : this("", 100) { }
-
         // Compare the manuscript with a book
         // 
-        public List<ReportItem> Compare(string bookName, string bookText)
+        public List<ReportItem> Compare(string bookText)
         {
             var result = new List<ReportItem>();
             int pos = 0;
@@ -39,7 +33,6 @@ namespace Plagiarism
                 
                 if (item != null)
                 {
-                    item.BookName = bookName;
                     result.Add(item);
                     pos += item.Length; 
                 }
@@ -48,18 +41,19 @@ namespace Plagiarism
             return result;
         }
 
-        // Ищет вхождения части манускрипта в книгу. Часть начинается с позиции pos и имеен длину N символов.
+        // Ищет вхождения части манускрипта в книгу. Часть начинается с позиции pos и имеет длину N символов.
         // Находит только первое вхождение, хотя должен искать максимальное из всех.
         //
-        public ReportItem IndexOfMax(string book, int pos) {
-            string sample = Manuscript.Substring(pos, N);
-            int ib = Find (book, sample, 0);
+        public ReportItem IndexOfMax(string book, int manPos) {
+            string manSample = Manuscript.Substring(manPos, N);
+            int bookPos = Find (book, manSample, 0);
             // если проба нашлась, расширяем ее до максимального размера
-            if (ib > -1)
+            if (bookPos > -1)
             {
-                int im = ExtStart(book, ib, pos);
-                int jm = ExtFinish(book, ib + N, pos + N);
-                return new ReportItem { Start = im, Length = jm - im };
+                int im = ExtStart(book, bookPos, manPos);
+                int jm = ExtFinish(book, bookPos + N, manPos + N);
+                int ib = im - manPos + bookPos; 
+                return new ReportItem { ManStart = im, BookStart = ib, Length = jm - im };
             }
             return null;
         }

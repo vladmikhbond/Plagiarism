@@ -93,12 +93,12 @@ namespace UnitTestPlagiarism
         [TestMethod]
         public void Compare_1()
         {
-            var book = "01234567890123456789";
             var manu = "00034567890123400";
+            var book = "01234567890123456789";
             var xc = new XComparer(manu, 5);
-            var res = xc.Compare("", book);
+            var res = xc.Compare(book);
 
-            Assert.AreEqual(3, res[0].Start);
+            Assert.AreEqual(3, res[0].ManStart);
             Assert.AreEqual(12, res[0].Length);
         }
 
@@ -108,9 +108,9 @@ namespace UnitTestPlagiarism
             var book = "01234567890123456789";
             var manu = "0000034567890123400";
             var xc = new XComparer(manu, 5);
-            var res = xc.Compare("", book);
+            var res = xc.Compare(book);
 
-            Assert.AreEqual(5, res[0].Start);
+            Assert.AreEqual(5, res[0].ManStart);
             Assert.AreEqual(12, res[0].Length);
         }
 
@@ -120,9 +120,9 @@ namespace UnitTestPlagiarism
             var book = "0001234567890123456789";
             var manu = "00034567890123400";
             var xc = new XComparer(manu, 5);
-            var res = xc.Compare("", book);
+            var res = xc.Compare(book);
 
-            Assert.AreEqual(3, res[0].Start);
+            Assert.AreEqual(3, res[0].ManStart);
             Assert.AreEqual(12, res[0].Length);
         }
 
@@ -133,17 +133,11 @@ namespace UnitTestPlagiarism
             string book = File.ReadAllText(@"Resources\Text1.txt");
             var manu = new string('0', L) + book.Substring(L, D) + new string('0', L);
             var xc = new XComparer(manu, 100);
-            var res = xc.Compare("", book);
+            var res = xc.Compare(book);
 
-            Assert.AreEqual(L, res[0].Start);
+            Assert.AreEqual(L, res[0].ManStart);
             Assert.AreEqual(D, res[0].Length);
         }
-
-
-
-
-
-
 
     }
 }
