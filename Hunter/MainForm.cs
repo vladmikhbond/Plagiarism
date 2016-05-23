@@ -37,7 +37,7 @@ namespace Hunter
                 DoReport(openManuscriptDialog.FileName, delta);
                 sw.Stop();
 
-                textFragmentBox.Text = $"READY. Elapsed time={sw.Elapsed}";
+                textFragmentBox.Text = $"Elapsed time = {sw.Elapsed}";
             }
         }
 
@@ -52,7 +52,7 @@ namespace Hunter
 
 
             reportBox.Items.Clear();
-            foreach (string bookPath in Directory.GetFiles(root))
+            foreach (string bookPath in Directory.GetFiles(root, "*.txt"))
             {
                 if (bookPath == manualPath)
                     continue;
@@ -92,7 +92,7 @@ namespace Hunter
             if (reportBox.SelectedIndex != -1)
             {
                 var item = (ReportItem)reportBox.SelectedItem;
-                textFragmentBox.Text = $"Manuscript:\r\n{item.GetBookFragment()}\r\n\r\nBook:\r\n{item.GetManualFragment()}";
+                textFragmentBox.Text = $"КОПИЯ:\r\n{item.GetBookFragment()}\r\n\r\nОРИГИНАЛ:\r\n{item.GetManualFragment()}";
             }
 
         }
@@ -100,6 +100,24 @@ namespace Hunter
         private void openManuscriptDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            textFragmentBox.Text =
+@"Проверке подвергаются текстовые файлы (*.txt).
+
+- Минимальная величина фрагмента заимствования устанавливается в поле Gap в области меню.
+
+- Для проверки файла нужно открыть его в меню File / Open.
+
+- Отчет о проверке выдается в виде списка заимствованных фрагментов в верхней части формы.
+
+- Выбранный в списке фрагмент будет виден в текстовом поле в нижней части формы.
+
+- Двойной клик по выбранному фрагменту показывает два экземпляра заимствованного фрагмента: копию и оригинал.
+
+";
         }
     }
 }
