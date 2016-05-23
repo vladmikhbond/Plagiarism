@@ -1,5 +1,7 @@
-﻿using Plagiarism;
+﻿using Hunter.Properties;
+using Plagiarism;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -17,6 +19,7 @@ namespace Hunter
         {
             if (openManuscriptDialog.ShowDialog() == DialogResult.OK)
             {
+                Text = $"Hunter - {Path.GetFileName(openManuscriptDialog.FileName)}";
                 int delta;
                 try
                 {
@@ -26,10 +29,15 @@ namespace Hunter
                     delta = 100;
                     toolStripDelta.Text = "100 ";
                 }
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
                 textFragmentBox.Text = "WAIT...";
                 textFragmentBox.Refresh();
                 DoReport(openManuscriptDialog.FileName, delta);
-                textFragmentBox.Text = "READY.";
+                sw.Stop();
+
+                textFragmentBox.Text = $"READY. Elapsed time={sw.Elapsed}";
             }
         }
 
@@ -58,6 +66,7 @@ namespace Hunter
                 foreach (var reportItem in report)
                 {
                     reportItem.Book = book;
+                    reportItem.Manual = manual;
                     reportBox.Items.Add(reportItem);
                 }
             }
@@ -69,13 +78,28 @@ namespace Hunter
             if (reportBox.SelectedIndex != -1)
             {
                 var item = (ReportItem)reportBox.SelectedItem;
-                textFragmentBox.Text = item.Fragment;
+                textFragmentBox.Text = item.GetBookFragment();
             }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void reportBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (reportBox.SelectedIndex != -1)
+            {
+                var item = (ReportItem)reportBox.SelectedItem;
+                textFragmentBox.Text = $"Manuscript:\r\n{item.GetBookFragment()}\r\n\r\nBook:\r\n{item.GetManualFragment()}";
+            }
+
+        }
+
+        private void openManuscriptDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

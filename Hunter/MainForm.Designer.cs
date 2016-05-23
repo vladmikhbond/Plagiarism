@@ -34,16 +34,15 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openManuscriptDialog = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripDelta = new System.Windows.Forms.ToolStripTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.reportBox = new System.Windows.Forms.ListBox();
             this.textFragmentBox = new System.Windows.Forms.TextBox();
-            this.toolStripDelta = new System.Windows.Forms.ToolStripTextBox();
+            this.openManuscriptDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -56,7 +55,6 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.toolStripDelta});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -81,35 +79,21 @@
             this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(170, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(56, 27);
-            this.toolsToolStripMenuItem.Text = "&Tools";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // helpToolStripMenuItem
             // 
@@ -123,18 +107,24 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(131, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
-            // openManuscriptDialog
+            // toolStripDelta
             // 
-            this.openManuscriptDialog.FileName = "openFileDialog1";
-            this.openManuscriptDialog.InitialDirectory = "C:\\Users\\Volodymyr\\Google Drive\\1-st course\\CourseProgect";
+            this.toolStripDelta.BackColor = System.Drawing.SystemColors.Window;
+            this.toolStripDelta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolStripDelta.Margin = new System.Windows.Forms.Padding(60, 0, 1, 0);
+            this.toolStripDelta.Name = "toolStripDelta";
+            this.toolStripDelta.Size = new System.Drawing.Size(40, 27);
+            this.toolStripDelta.Text = "100 ";
+            this.toolStripDelta.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolStripDelta.ToolTipText = "Fragment Size";
             // 
             // splitContainer1
             // 
@@ -164,6 +154,7 @@
             this.reportBox.Size = new System.Drawing.Size(757, 168);
             this.reportBox.TabIndex = 2;
             this.reportBox.SelectedIndexChanged += new System.EventHandler(this.reportBox_SelectedIndexChanged);
+            this.reportBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.reportBox_MouseDoubleClick);
             // 
             // textFragmentBox
             // 
@@ -175,15 +166,21 @@
             this.textFragmentBox.Size = new System.Drawing.Size(757, 438);
             this.textFragmentBox.TabIndex = 0;
             // 
-            // toolStripDelta
+            // openManuscriptDialog
             // 
-            this.toolStripDelta.BackColor = System.Drawing.SystemColors.Window;
-            this.toolStripDelta.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolStripDelta.Name = "toolStripDelta";
-            this.toolStripDelta.Size = new System.Drawing.Size(40, 27);
-            this.toolStripDelta.Text = "100 ";
-            this.toolStripDelta.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.toolStripDelta.ToolTipText = "Fragment Size";
+            this.openManuscriptDialog.FileName = "openFileDialog1";
+            this.openManuscriptDialog.InitialDirectory = "C:\\Users\\Volodymyr\\Google Drive\\1-st course\\CourseProgect";
+            this.openManuscriptDialog.RestoreDirectory = true;
+            this.openManuscriptDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openManuscriptDialog_FileOk);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(125, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Gap";
             // 
             // MainForm
             // 
@@ -191,10 +188,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(757, 641);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Hunter";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -214,8 +212,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -224,5 +220,6 @@
         private System.Windows.Forms.ListBox reportBox;
         private System.Windows.Forms.TextBox textFragmentBox;
         private System.Windows.Forms.ToolStripTextBox toolStripDelta;
+        private System.Windows.Forms.Label label1;
     }
 }

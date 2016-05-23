@@ -12,14 +12,21 @@ namespace Plagiarism
         public int BookStart;
         public int Length;
         public Book Book;
+        public Book Manual;
 
         public override string ToString()
         {
-            return $"{Book.Name}, ({ManStart}, {Length})";
+            return $"{Book.Name}, ({BookStart}, {Length})";
         }
 
-        public string Fragment {
-            get { return Book.Slice(BookStart, Length); }                               
+        public string GetBookFragment()
+        {          
+            return Book.Slice(BookStart, Length); 
+        }
+
+        public string GetManualFragment()
+        {
+            return Manual.Slice(ManStart, Length); 
         }
     }
 }
