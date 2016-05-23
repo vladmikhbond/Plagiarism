@@ -3,8 +3,9 @@
 namespace Plagiarism
 {
     /// <summary>
-    /// Compare a manuscript with books from library with List<ReporItem> as result.
-    /// N - step of testing, N/2 - initial sample size
+    /// Compare a manuscript with books from library. 
+    /// Returns List<ReporItem> as result.
+    /// N - step of searching.
     /// </summary>
     public class XComparer
     {
@@ -13,7 +14,7 @@ namespace Plagiarism
         // It is analized.
         public string  Manuscript { set; private get; }
 
-        public XComparer(string manuscript, int n=30)
+        public XComparer(string manuscript, int n)
         {
             Manuscript = manuscript;
             N = n;
@@ -25,7 +26,7 @@ namespace Plagiarism
         {
             var result = new List<ReportItem>();
             int pos = 0;
-            // отбираем пробы в манускрипте с шагом N и длиной N/2
+            // отбираем пробы в манускрипте с шагом N 
             while (pos < Manuscript.Length - N)
             {
                 // ищем расширенную пробу в книге 
@@ -47,6 +48,7 @@ namespace Plagiarism
         public ReportItem IndexOfMax(string book, int manPos) {
             string manSample = Manuscript.Substring(manPos, N);
             int bookPos = Find (book, manSample, 0);
+
             // если проба нашлась, расширяем ее до максимального размера
             if (bookPos > -1)
             {
@@ -58,7 +60,7 @@ namespace Plagiarism
             return null;
         }
 
-        // Сдвигаем начало 
+        // Сдвигаем начало до предела
         //
         public int ExtStart(string bookText, int ib, int im)
         {
@@ -70,7 +72,7 @@ namespace Plagiarism
             return im + 1;
         }
 
-        // Сдвигаем конец 
+        // Сдвигаем конец до предела
         //
         public int ExtFinish(string bookText, int ib, int im)
         {
@@ -83,7 +85,7 @@ namespace Plagiarism
         }
 
 
-        // Поиск образца в тексте
+        // Поиск образца в тексте (todo: update to KMP later)
         //
         public static int Find(string text, string sample, int startIndex)
         {
