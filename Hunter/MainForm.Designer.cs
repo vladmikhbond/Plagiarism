@@ -35,6 +35,7 @@
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDelta = new System.Windows.Forms.ToolStripTextBox();
@@ -43,7 +44,6 @@
             this.textFragmentBox = new System.Windows.Forms.TextBox();
             this.openManuscriptDialog = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -87,12 +87,12 @@
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(178, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -106,15 +106,22 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 27);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(134, 26);
+            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(131, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // toolStripDelta
@@ -124,9 +131,11 @@
             this.toolStripDelta.Margin = new System.Windows.Forms.Padding(100, 0, 1, 0);
             this.toolStripDelta.Name = "toolStripDelta";
             this.toolStripDelta.Size = new System.Drawing.Size(40, 27);
-            this.toolStripDelta.Text = "100 ";
+            this.toolStripDelta.Text = "100";
             this.toolStripDelta.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolStripDelta.ToolTipText = "Fragment Size";
+            this.toolStripDelta.Leave += new System.EventHandler(this.toolStripDelta_Leave);
+            this.toolStripDelta.TextChanged += new System.EventHandler(this.toolStripDelta_TextChanged);
             // 
             // splitContainer1
             // 
@@ -175,7 +184,6 @@
             this.openManuscriptDialog.FileName = "openFileDialog1";
             this.openManuscriptDialog.InitialDirectory = "C:\\Users\\Volodymyr\\Google Drive\\1-st course\\CourseProgect";
             this.openManuscriptDialog.RestoreDirectory = true;
-            this.openManuscriptDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openManuscriptDialog_FileOk);
             // 
             // label1
             // 
@@ -188,13 +196,6 @@
             this.label1.Text = "Gap";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // helpToolStripMenuItem1
-            // 
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(181, 26);
-            this.helpToolStripMenuItem1.Text = "Help";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -206,6 +207,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Hunter";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -22,5 +22,17 @@ namespace Hunter.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public string GapSize {
+            get {
+                return ((string)(this["GapSize"]));
+            }
+            set {
+                this["GapSize"] = value;
+            }
+        }
     }
 }

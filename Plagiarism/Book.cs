@@ -27,14 +27,24 @@ namespace Plagiarism
 
             for (int i = 0; i < Source.Length; i++)
             {
-                if ("цкнгшщзхфвпрлджчсмтбqwrtpsdfghklzxcvbnmцкнгшщзхфвпрлджчстб".Contains(s[i]))
+                var c = s[i];
+                if ("цкнгшщзхфвпрлджчсмтбqwrtpsdfghklzxcvbnm".Contains(c))
                 {
-                    digest.Add(s[i]);
+                    // change russian to english
+                    if (c == 'х')
+                        c = 'x';
+                    else if (c == 'с')
+                        c = 'c';
+                    else if (c == 'р')
+                        c = 'p';
+
+                    digest.Add(c);
                     map.Add(i);
                 }
             }
             return new string(digest.ToArray());
         }
+
 
         public List<int> map;
 

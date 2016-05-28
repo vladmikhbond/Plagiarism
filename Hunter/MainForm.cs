@@ -92,32 +92,45 @@ namespace Hunter
             if (reportBox.SelectedIndex != -1)
             {
                 var item = (ReportItem)reportBox.SelectedItem;
-                textFragmentBox.Text = $"КОПИЯ:\r\n{item.GetBookFragment()}\r\n\r\nОРИГИНАЛ:\r\n{item.GetManualFragment()}";
+                textFragmentBox.Text = $@"{item.GetBookFragment()}
+================================================================================
+{item.GetManualFragment()}";
             }
 
         }
 
-        private void openManuscriptDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
 
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             textFragmentBox.Text =
-@"Проверке подвергаются текстовые файлы (*.txt).
+@"Проверке подвергаются текстовые файлы (*.txt) в кодировке UTF-8.
 
-- Минимальная величина фрагмента заимствования устанавливается в поле Gap в области меню.
+● Минимальная величина искомого фрагмента устанавливается в поле Gap в области меню.
 
-- Для проверки файла нужно открыть его в меню File / Open.
+● Для проверки файла нужно открыть его в меню File / Open.
 
-- Отчет о проверке выдается в виде списка заимствованных фрагментов в верхней части формы.
+● Отчет о проверке выдается в виде списка заимствованных фрагментов в верхней части формы.
 
-- Выбранный в списке фрагмент будет виден в текстовом поле в нижней части формы.
+● Выбранный в списке фрагмент будет виден в текстовом поле в нижней части формы.
 
-- Двойной клик по выбранному фрагменту показывает два экземпляра заимствованного фрагмента: копию и оригинал.
+● Двойной клик по выбранному фрагменту показывает копию и оригинал найденного фрагмента.
 
 ";
+        }
+
+        private void toolStripDelta_Leave(object sender, EventArgs e)
+        {
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.toolStripDelta.Text = Settings.Default.GapSize;
+        }
+
+        private void toolStripDelta_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.GapSize = this.toolStripDelta.Text;
+            Settings.Default.Save();
         }
     }
 }
