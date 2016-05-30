@@ -86,12 +86,12 @@
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(178, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -133,6 +133,8 @@
             this.toolStripDelta.Text = "100 ";
             this.toolStripDelta.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolStripDelta.ToolTipText = "Fragment Size";
+            this.toolStripDelta.Leave += new System.EventHandler(this.toolStripDelta_Leave);
+            this.toolStripDelta.TextChanged += new System.EventHandler(this.toolStripDelta_TextChanged);
             // 
             // splitContainer1
             // 
@@ -181,7 +183,6 @@
             this.openManuscriptDialog.FileName = "openFileDialog1";
             this.openManuscriptDialog.InitialDirectory = "C:\\Users\\Volodymyr\\Google Drive\\1-st course\\CourseProgect";
             this.openManuscriptDialog.RestoreDirectory = true;
-            this.openManuscriptDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openManuscriptDialog_FileOk);
             // 
             // MainForm
             // 
@@ -193,6 +194,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Hunter";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

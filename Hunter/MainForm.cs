@@ -98,7 +98,7 @@ $@"{item.GetBookFragment()}
 {item.GetManualFragment()}";
             }
 
-        }
+            }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
@@ -109,10 +109,6 @@ $@"{item.GetBookFragment()}
                 Font = new System.Drawing.Font(Font.FontFamily, Font.Size - 0.2f);
         }
 
-        private void openManuscriptDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
 
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -121,17 +117,32 @@ $@"{item.GetBookFragment()}
 
 - Все файлы, включая проверяемый, должны находиться в одной папке.  
 
-- Для проверки файла нужно открыть его в меню File / Open.
+● Для проверки файла нужно открыть его в меню File / Open.
 
 - Минимальная величина фрагмента заимствования устанавливается в поле Gap в области главного меню.
 
 - Отчет о проверке выдается в виде списка заимствованных фрагментов в верхней части формы.
 
-- Выбранный в списке фрагмент будет виден в текстовом поле в нижней части формы.
+● Выбранный в списке фрагмент будет виден в текстовом поле в нижней части формы.
 
 - Двойной клик по выбранному фрагменту показывает копию и оригинал фрагмента.
 
 ";
+        }
+
+        private void toolStripDelta_Leave(object sender, EventArgs e)
+        {
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.toolStripDelta.Text = Settings.Default.GapSize;
+        }
+
+        private void toolStripDelta_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Default.GapSize = this.toolStripDelta.Text;
+            Settings.Default.Save();
         }
     }
 }
