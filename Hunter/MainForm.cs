@@ -9,6 +9,7 @@ namespace Hunter
 {
     public partial class MainForm : Form
     {
+        string manualPath;
 
         public MainForm()
         {
@@ -19,40 +20,41 @@ namespace Hunter
         {
             if (openManuscriptDialog.ShowDialog() == DialogResult.OK)
             {
-                Text = $"Hunter - {Path.GetFileName(openManuscriptDialog.FileName)}";
-                int delta;
-                try
-                {
-                    delta = Convert.ToInt32(toolStripDelta.Text);
-                } catch
-                {
-                    delta = 100;
-                    toolStripDelta.Text = "100 ";
-                }
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
-
-                textFragmentBox.Text = "WAIT...";
-                textFragmentBox.Refresh();
-                DoReport(openManuscriptDialog.FileName, delta);
-                sw.Stop();
-
-                textFragmentBox.Text = $"Elapsed time = {sw.Elapsed}";
+                manualPath = openManuscriptDialog.FileName;
+                Text = $"{Path.GetFileName(manualPath)} - Hunter";
+                AnalizeWithWatch();
             }
         }
 
-        private void DoReport(string manualPath, int n)
+        private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string s = File.ReadAllText(manualPath);
-            Book manual = new Book("", s);
+            AnalizeWithWatch();
+        }
 
-            XComparer comparer = new XComparer(manual.Digest, n);
+        private void AnalizeWithWatch()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            textFragmentBox.Text = "WAIT...";
+            textFragmentBox.Refresh();
 
-            string root = Path.GetDirectoryName(manualPath);
+            Analize();
 
+            sw.Stop();
+            textFragmentBox.Text = $"Elapsed time = {sw.Elapsed}";
+        }
+
+
+        private void Analize()
+        {
+            Book manual = new Book(name:"", source:File.ReadAllText(manualPath));
+
+            XComparer comparer = new XComparer(manual.Digest, GetFrigmentSize());
+
+            string rootPath = Path.GetDirectoryName(manualPath);
 
             reportBox.Items.Clear();
-            foreach (string bookPath in Directory.GetFiles(root, "*.txt"))
+            foreach (string bookPath in Directory.GetFiles(rootPath, "*.txt"))
             {
                 if (bookPath == manualPath)
                     continue;
@@ -73,6 +75,21 @@ namespace Hunter
             textFragmentBox.Text = "";
         }
 
+
+        private int GetFrigmentSize()
+        {
+            int result;
+            if (int.TryParse(toolStripDelta.Text, out result))
+            {
+                return result;
+            }
+            toolStripDelta.Text = "100";
+            return 100;
+        }
+
+
+        // Show selected text fragment
+        //
         private void reportBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (reportBox.SelectedIndex != -1)
@@ -82,18 +99,15 @@ namespace Hunter
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
+        // Show a pair of fragments
+        //
         private void reportBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (reportBox.SelectedIndex != -1)
             {
                 var item = (ReportItem)reportBox.SelectedItem;
 
-                textFragmentBox.Text = 
+                textFragmentBox.Text =
 $@"{item.GetBookFragment()}
 
 ============================ {item.Book.Name}: =================================
@@ -101,9 +115,17 @@ $@"{item.GetBookFragment()}
 {item.GetManualFragment()}";
 
             }
-
         }
 
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+
+        // Change the font size
+        //
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
@@ -148,5 +170,6 @@ $@"{item.GetBookFragment()}
             Settings.Default.GapSize = this.toolStripDelta.Text;
             Settings.Default.Save();
         }
+
     }
 }
