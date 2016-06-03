@@ -1,9 +1,11 @@
 ﻿using Hunter.Properties;
 using Plagiarism;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace Hunter
 {
@@ -26,26 +28,30 @@ namespace Hunter
             }
         }
 
-        private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void toolStripDelta_Leave(object sender, EventArgs e)
         {
             AnalizeWithWatch();
         }
 
         private void AnalizeWithWatch()
         {
+            if (string.IsNullOrWhiteSpace(manualPath))
+                return;
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
             textFragmentBox.Text = "WAIT...";
             textFragmentBox.Refresh();
 
-            Analize();
-
+            var max = Analize();
             sw.Stop();
-            textFragmentBox.Text = $"Elapsed time = {sw.Elapsed}";
+
+            textFragmentBox.Text = $"Elapsed time = {sw.Elapsed} \r\nMax = {max}";
         }
 
 
-        private void Analize()
+        private int Analize()
         {
             Book manual = new Book(name:"", source:File.ReadAllText(manualPath));
 
@@ -53,6 +59,7 @@ namespace Hunter
 
             string rootPath = Path.GetDirectoryName(manualPath);
 
+            int max = 0;
             reportBox.Items.Clear();
             foreach (string bookPath in Directory.GetFiles(rootPath, "*.txt"))
             {
@@ -69,10 +76,14 @@ namespace Hunter
                 {
                     reportItem.Book = book;
                     reportItem.Manual = manual;
+
                     reportBox.Items.Add(reportItem);
                 }
+
+                if (report.Count > 0)
+                    max = Math.Max(max, report.Max(r => r.Length));
             }
-            textFragmentBox.Text = "";
+            return max;
         }
 
 
@@ -156,9 +167,6 @@ $@"{item.GetBookFragment()}
 ";
         }
 
-        private void toolStripDelta_Leave(object sender, EventArgs e)
-        {
-        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -171,5 +179,13 @@ $@"{item.GetBookFragment()}
             Settings.Default.Save();
         }
 
+        private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void toolStripDelta_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
